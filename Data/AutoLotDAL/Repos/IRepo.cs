@@ -2,7 +2,7 @@
 
 namespace AutoLotDAL.Repos
 {
-    public interface IRepo<T>
+    public interface IRepo<T> where T: class
     {
         int Add(T entity);
         int AddRange(IList<T> entities);
