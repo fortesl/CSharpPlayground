@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfApp1.DataBinding.Bindings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Bindings" Height="450" Width="800">
+    <Grid>
+        <StackPanel DataContext="{Binding ElementName=mySB}">
+            <Label Content="Move the scroll bar to see the current value"/>
+
+            <!-- The scrollbar's value is the source of this data bind. -->
+            <ScrollBar x:Name="mySB" Orientation="Horizontal" Height="30"
+           Minimum = "1" Maximum = "100" LargeChange="1" SmallChange="1"/>
+
+            <!-- The label's content will be bound to the scroll bar! -->
+            <Label x:Name="labelSBThumb" Height="30" BorderBrush="Blue" BorderThickness="2" />
+
+            <Button Content="Click" Height="200" FontSize = "{Binding Path=Value}"/>
+        </StackPanel>
+    </Grid>
+</Window>

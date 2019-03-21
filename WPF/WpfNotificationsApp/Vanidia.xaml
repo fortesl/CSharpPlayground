@@ -1,0 +1,84 @@
+﻿<Window x:Class="WpfNotificationsApp.Vanidia"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNotificationsApp"
+        mc:Ignorable="d"
+        Title="Vanidia" Height="450" Width="800">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="Converter" />
+        <local:ToWholeNumberConverter x:Key="ToWholeNumberConverter" />
+    </Window.Resources>
+    
+    <Grid Name="ObjecDataBinding">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Margin="10" Name="Display">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Name: " Margin="5"/>
+                <TextBlock Margin="5" Text="{Binding Name}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Title: "  Margin="5" VerticalAlignment="Bottom" />
+                <TextBlock Margin="5" Text="{Binding Title}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Change Title: "  Margin="5" VerticalAlignment="Bottom" />
+                <TextBox Margin="5" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Width="400"/>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1" DataContext="{Binding ElementName=EmployeeList, Path=SelectedItem}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ComboBox Name="EmployeeList" FontSize="30" Height="50" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name: " Margin="2"/>
+                            <TextBlock Text="{Binding Name}" Margin="2"/>
+                            <TextBlock Text="Title: " Margin="2"/>
+                            <TextBlock Text="{Binding Title}" Margin="2"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <StackPanel 
+                Grid.Row="1" 
+                Visibility="{Binding Path=IsItemSelected, Converter={StaticResource Converter}}">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Name: " />
+                    <TextBox Margin="5,0" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Title: " />
+                    <TextBox Margin="5,0" Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Slider 
+                Name="MySlider"
+                Maximum="100"
+                Minimum="1"
+                Width="600"
+                />
+            <TextBlock
+                Margin="5,0"
+                Text="{Binding Path=Value, 
+                ElementName=MySlider, 
+                Converter={StaticResource ToWholeNumberConverter}}" />
+        </StackPanel>
+    </Grid>
+</Window>
